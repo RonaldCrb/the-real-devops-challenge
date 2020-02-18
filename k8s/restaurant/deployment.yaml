@@ -17,6 +17,9 @@ spec:
       containers:
       - image: ronaldcrb/restaurant
         name: restaurant
+        envFrom:
+          - secretRef:
+              name: restaurant
         resources:
           requests:
             memory: "64Mi"
@@ -25,23 +28,23 @@ spec:
             memory: "128Mi"
             cpu: "500m"
         
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: {{ default .Values.service.port .Values.service.targetPort }}
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            failureThreshold: 2
-            successThreshold: 1
-            timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 2
+          successThreshold: 1
+          timeoutSeconds: 1
           
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: {{ default .Values.service.port .Values.service.targetPort }}
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            failureThreshold: 3
-            successThreshold: 1
-            timeoutSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          timeoutSeconds: 1
           

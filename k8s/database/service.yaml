@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb-h
+  name: mongodb
   labels:
-    app: mongodb-h
+    app: mongodb
 spec:
   type: ClusterIP
   ports:
@@ -13,4 +13,4 @@ spec:
       protocol: "TCP"
       
   selector:
-    app: mongodb-h
+    app: mongodb

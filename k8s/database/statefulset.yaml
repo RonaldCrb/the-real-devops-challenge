@@ -3,35 +3,42 @@ kind: StatefulSet
 metadata:
   name: mongodb
   labels:
-    app: mongodb-h
+    app: mongodb
 spec:
   
   replicas: 1
   
+  selector:
+    matchLabels:
+      app: mongodb
+  
   template:
     metadata:
       labels:
-        app: mongodb-h
+        app: mongodb
     spec:
       containers:
       - name: mongodb
         image: mongo:latest
         envFrom:
           - secretRef:
-              name: mongo-secret
+              name: restaurant
         volumeMounts:
-          - name: restaurant-pvc
-            mountPath: ./mongodb:/data/db
+          - name: restaurant-data-volume
+            mountPath: /data/db
 
-      volumes:
-        - name: restaurant-pvc
-          persistentVolumeClaim:
-            claimName: restaurant-pvc
+  volumeClaimTemplates:
+    - metadata:
+        name: restaurant-data-volume
 
-  selector:
-    matchLabels:
-      app: mongodb-h
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 250Mi
 
-  serviceName: mongodb-h
+  serviceName: mongodb
 
     
