@@ -20,7 +20,7 @@ publish:
     DOCKER_DRIVER: overlay
   script:
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD 
-    - docker build -t gcr.io/master-gke/restaurant:latest .
-    - docker push gcr.io/master-gke/restaurant:latest
+    - docker build -t ronaldcrb/restaurant:latest .
+    - docker push ronaldcrb/restaurant:latest
   only:
     - master
