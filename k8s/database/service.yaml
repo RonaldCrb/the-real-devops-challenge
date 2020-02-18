@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-h
+  labels:
+    app: mongodb-h
+spec:
+  type: ClusterIP
+  ports:
+    - name: main 
+      port: 27017
+      targetPort: 27017
+      protocol: "TCP"
+      
+  selector:
+    app: mongodb-h

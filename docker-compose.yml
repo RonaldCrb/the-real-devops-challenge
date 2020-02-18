@@ -1,0 +1,28 @@
+version: "2.4"
+
+services:
+
+  # iniciamos el contenedor con la base de datos. 
+  mongo:
+    container_name: mongodb
+    image: mongo:latest
+    restart: always
+    # los archivos generados en nuestro contenedor estan vinculados con el directorio mongdb
+    volumes:
+      - ./.mongodb:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=mongodb
+    ports:
+      - 27017:27017
+
+  app:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+    environment:
+      - MONGO_URI=mongodb://mongo:27017

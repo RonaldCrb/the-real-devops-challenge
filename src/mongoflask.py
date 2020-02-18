@@ -28,3 +28,7 @@ def find_restaurants(mongo, _id=None):
     if _id:
         query["_id"] = ObjectId(id)
     return list(mongo.db.restaurant.find(query))
+
+def healthz():
+    status = "healthy"
+    return object(status)

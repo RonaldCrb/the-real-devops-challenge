@@ -25,5 +25,10 @@ def restaurant(id):
     restaurants = find_restaurants(mongo, id)
     return jsonify(restaurants)
 
+
+@app.route("/healthz")
+def healthz():
+    return jsonify("healthy")
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=False, port=8080)
