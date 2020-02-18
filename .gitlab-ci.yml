@@ -5,13 +5,11 @@ stages:
   - test
   - publish
 
-lint: 
-  image: 
-    - python:3.8.1-alpine
-
+test: 
+  image: painless/tox
   stage: test
   script: 
-    - npm ci
+    - tox
 
 publish:
   stage: publish
@@ -21,8 +19,7 @@ publish:
   variables:
     DOCKER_DRIVER: overlay
   script:
-    - echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
-    - docker login -u _json_key --password-stdin https://gcr.io < ${HOME}/gcloud-service-key.json
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD 
     - docker build -t gcr.io/master-gke/restaurant:latest .
     - docker push gcr.io/master-gke/restaurant:latest
   only:
