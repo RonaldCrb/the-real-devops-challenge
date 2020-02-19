@@ -21,3 +21,5 @@ README.md
 
 # Editor files are not necessary for images
 .vscode
+
+./mongodb
